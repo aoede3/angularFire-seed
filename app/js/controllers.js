@@ -3,121 +3,125 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-   .controller('HomeCtrl', ['$scope', 'syncData', function($scope, syncData) {
-      syncData('syncedValue').$bind($scope, 'syncedValue');
-   }])
+ 
+	.controller('MyCtrl1', [function() {
+		//
+	}])	
+	
+	.controller('MyCtrl2', ['$scope', 'syncData', function($scope, syncData) {
+		syncData('syncedValue').$bind($scope, 'syncedValue');
+	}])	
+   
+	.controller('LoginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
+		$scope.email = null;
+		$scope.pass = null;
+		$scope.confirm = null;
+		$scope.createMode = false;
 
-  .controller('ChatCtrl', ['$scope', 'syncData', function($scope, syncData) {
-      $scope.newMessage = null;
+		$scope.login = function(cb) {
+			$scope.err = null;
+			$scope.submitted = false;
+			//$scope.loginForm = function() {
+				if ($scope.loginForm.$valid) {
+					loginService.login($scope.email, $scope.pass, function(err, user) {
+						$scope.err = err? err + '' : null;
+						if( !err ) {
+							cb && cb(user);
+						}
+					});
+				} else {
+					$scope.loginForm.submitted = true;
+				}
+			//}
+		};
+		
+		$scope.forgotpass = function(cb){
+			$scope.err = null;
+			$scope.passMode = true;
+			if( !$scope.email ) {
+				$scope.err = 'Enter email address to retrieve password';
+			}
+			else {
+				loginService.forgotpass($scope.email, function(err) {
+					if( !err ) {
+						console.log('supposedeeedd');
+					}
+				});
+			}
+		};
 
-      // constrain number of messages by limit into syncData
-      // add the array into $scope.messages
-      $scope.messages = syncData('messages', 10);
+		$scope.createAccount = function() {
+			$scope.err = null;
+			if( assertValidLoginAttempt() ) {
+				loginService.createAccount($scope.email, $scope.pass, function(err, user) {
+					if( err ) {
+						$scope.err = err? err + '' : null;
+					}
+					else {
+						// must be logged in before I can write to my profile
+						$scope.login(function() {
+							loginService.createProfile(user.uid, user.email);
+							$location.path('/account');
+						});
+					}
+				});
+			}
+		};
+		
+		$scope.clearErr = function() {
+			$scope.err = null;
+		};
+		
+		function assertValidLoginAttempt() {
+			if( !$scope.email ) {
+				$scope.err = 'Please enter an email address';
+			}else if( !$scope.pass ) {
+				$scope.err = 'Please enter a password';
+			}else if( $scope.pass !== $scope.confirm ) {
+				$scope.err = 'Passwords do not match';
+			}
+			return !$scope.err;
+		}
+	}])
 
-      // add new messages to the list
-      $scope.addMessage = function() {
-         if( $scope.newMessage ) {
-            $scope.messages.$add({text: $scope.newMessage});
-            $scope.newMessage = null;
-         }
-      };
-   }])
+	.controller('AccountCtrl', ['$scope', 'loginService', 'syncData', '$location', function($scope, loginService, syncData, $location) {
+		syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
 
-   .controller('LoginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
-      $scope.email = null;
-      $scope.pass = null;
-      $scope.confirm = null;
-      $scope.createMode = false;
+		$scope.logout = function() {
+			loginService.logout();
+		};
 
-      $scope.login = function(cb) {
-         $scope.err = null;
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
-         }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else {
-            loginService.login($scope.email, $scope.pass, function(err, user) {
-               $scope.err = err? err + '' : null;
-               if( !err ) {
-                  cb && cb(user);
-               }
-            });
-         }
-      };
+		$scope.oldpass = null;
+		$scope.newpass = null;
+		$scope.confirm = null;
 
-      $scope.createAccount = function() {
-         $scope.err = null;
-         if( assertValidLoginAttempt() ) {
-            loginService.createAccount($scope.email, $scope.pass, function(err, user) {
-               if( err ) {
-                  $scope.err = err? err + '' : null;
-               }
-               else {
-                  // must be logged in before I can write to my profile
-                  $scope.login(function() {
-                     loginService.createProfile(user.uid, user.email);
-                     $location.path('/account');
-                  });
-               }
-            });
-         }
-      };
+		$scope.reset = function() {
+			$scope.err = null;
+			$scope.msg = null;
+		};
 
-      function assertValidLoginAttempt() {
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
-         }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else if( $scope.pass !== $scope.confirm ) {
-            $scope.err = 'Passwords do not match';
-         }
-         return !$scope.err;
-      }
-   }])
+		$scope.updatePassword = function() {
+			$scope.reset();
+			loginService.changePassword(buildPwdParms());
+		};
 
-   .controller('AccountCtrl', ['$scope', 'loginService', 'syncData', '$location', function($scope, loginService, syncData, $location) {
-      syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
+		function buildPwdParms() {
+			return {
+				email: $scope.auth.user.email,
+				oldpass: $scope.oldpass,
+				newpass: $scope.newpass,
+				confirm: $scope.confirm,
+				callback: function(err) {
+					if( err ) {
+						$scope.err = err;
+					}else {
+						$scope.oldpass = null;
+						$scope.newpass = null;
+						$scope.confirm = null;
+						$scope.msg = 'Password updated!';
+					}
+				}
+			}
+		}
 
-      $scope.logout = function() {
-         loginService.logout();
-      };
-
-      $scope.oldpass = null;
-      $scope.newpass = null;
-      $scope.confirm = null;
-
-      $scope.reset = function() {
-         $scope.err = null;
-         $scope.msg = null;
-      };
-
-      $scope.updatePassword = function() {
-         $scope.reset();
-         loginService.changePassword(buildPwdParms());
-      };
-
-      function buildPwdParms() {
-         return {
-            email: $scope.auth.user.email,
-            oldpass: $scope.oldpass,
-            newpass: $scope.newpass,
-            confirm: $scope.confirm,
-            callback: function(err) {
-               if( err ) {
-                  $scope.err = err;
-               }
-               else {
-                  $scope.oldpass = null;
-                  $scope.newpass = null;
-                  $scope.confirm = null;
-                  $scope.msg = 'Password updated!';
-               }
-            }
-         }
-      }
-
-   }]);
+	}]);

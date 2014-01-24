@@ -30,6 +30,16 @@ angular.module('myApp.service.login', ['firebase', 'myApp.service.firebase'])
                      }
                   }, callback);
             },
+			
+			forgotpass: function(email) {
+				assertAuth();
+				console.log('email: ' + email);
+				auth.$sendPasswordResetEmail(email, function(error, success) {
+					if (!error) {
+						console.log('Password reset email sent successfully');
+					}
+				});
+			},
 
             logout: function() {
                assertAuth();

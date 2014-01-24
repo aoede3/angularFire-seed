@@ -1,38 +1,100 @@
 <!doctype html>
 <html lang="en" ng-app="myApp">
 <head>
-  <meta charset="utf-8">
-  <title>My AngularJS App</title>
-  <link rel="stylesheet" href="css/app.css"/>
+	<meta charset="utf-8"/>
+	<title app-name></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="ico/favicon.png">
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+		<!-- Bootstrap theming -->
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css"/>	
+		<link rel="stylesheet" href="css/jumbotron.css"/>
+		<link rel="stylesheet" href="css/sticky-footer-navbar.css">
+
+	<link rel="stylesheet" href="css/app.css"/>
 </head>
 <body ng-cloak-auth class="hide">
+	<div id="wrap">
 
-  <ul class="menu">
-    <li><a href="#/home">home</a></li>
-    <li><a href="#/chat">chat</a></li>
-    <li ng-show-auth="logout,error"><a href="#/login">login</a></li>
-    <li ng-show-auth="login"><a href="#/account">account</a></li>
-  </ul>
+		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		  <div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li ng-class="{active: activetab == '/'}"><a class="navbar-brand" href="#/"><span app-name></span></a></li>
+					<li ng-class="{active: activetab == '/view1'}"><a  href="#/view1">view1</a></li>
+					<li ng-class="{active: activetab == '/view2'}" ng-show-auth="login"><a  href="#/view2">view1</a></li>
+					<li ng-class="{active: activetab == '/account'}" ng-show-auth="login"><a href="#/account">Account</a></li>
+				</ul>
 
-  <div ng-view></div>
+			</div><!--/.navbar-collapse -->
+		  </div>
+		</div>
 
-  <div>AngularFire-seed v<span app-version></span></div>
+		<div ng-view></div>
+		
+	</div>
 
-  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-  <script src="https://cdn.firebase.com/v0/firebase-simple-login.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
-  <script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/directives.js"></script>
-  <script src="js/filters.js"></script>
-  <script src="js/routes.js"></script>
-  <script src="js/services.js"></script>
-  <script src="js/service.login.js"></script>
-  <script src="js/service.firebase.js"></script>
-  <script src="js/module.waitForAuth.js"></script>
-  <script src="js/module.routeSecurity.js"></script>
+    <div id="footer">
+		<div class="container">		
+			<footer>			
+				<p class><span app-name></span> v<span app-version></span></p>
+			</footer>
+		</div>
+	</div>
+	
+	<!-- Bootstrap -->
+	<script src="lib/_jquery/jquery.js"></script>
+	<script src="lib/_bootstrap/bootstrap.js"></script>	
+
+	<!-- Firebase -->
+	<script src='https://cdn.firebase.com/js/client/1.0.2/firebase.js'></script>
+	<script src="https://cdn.firebase.com/js/simple-login/1.2.1/firebase-simple-login.js"></script>
+	
+	<!-- Angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.js"></script>
+		<!-- AngularStrap - Bootstrap 
+		<script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.min.js"></script>
+		<script src="//rawgithub.com/mgcrea/angular-strap/master/dist/angular-strap.tpl.min.js"></script>
+		<script src="//rawgithub.com/mgcrea/angular-strap/master/dist/modules/navbar.js"></script>-->
+		<!-- AngularFire - Firebase -->
+		<script src="lib/angularfire/angularfire.js"></script>
+	
+	<!-- Application -->
+	<script src="js/app.js"></script>
+	<script src="js/config.js"></script>
+	<script src="js/controllers.js"></script>
+	<script src="js/directives.js"></script>	
+	<script src="js/filters.js"></script>
+	<script src="js/routes.js"></script>
+	<script src="js/services.js"></script>	
+	
+		<!-- Firebase authentication -->
+		<script src="js/service.login.js"></script>
+		<script src="js/service.firebase.js"></script>
+		<script src="js/module.waitForAuth.js"></script>
+		<script src="js/module.routeSecurity.js"></script>	
+	
 </body>
 </html>

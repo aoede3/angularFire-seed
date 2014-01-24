@@ -1,11 +1,18 @@
 'use strict';
 
 // Declare app level module which depends on filters, and services
-angular.module('myApp',
-      ['myApp.config', 'myApp.routes', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers',
-         'waitForAuth', 'routeSecurity']
-   )
-
+var App = angular.module('myApp', [
+	'myApp.config', 
+	'myApp.routes', 
+	'myApp.filters', 
+	'myApp.services', 
+	'myApp.directives', 
+	'myApp.controllers',
+	'waitForAuth', 
+	'routeSecurity', 
+	'firebase'
+	])
+		 
    .run(['loginService', '$rootScope', 'FBURL', function(loginService, $rootScope, FBURL) {
       if( FBURL === 'https://INSTANCE.firebaseio.com' ) {
          // double-check that the app has been configured
@@ -16,7 +23,7 @@ angular.module('myApp',
       }
       else {
          // establish authentication
-         $rootScope.auth = loginService.init('/login');
+         $rootScope.auth = loginService.init('/');
          $rootScope.FBURL = FBURL;
       }
    }]);

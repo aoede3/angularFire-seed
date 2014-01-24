@@ -1,10 +1,70 @@
-<h2>Home</h2>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<h1><span app-name></span> <span class="text-info"> - blah blah</span></h1>
+				<h2 class="lead">Lead in sentance for application</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed lectus mauris.</p>
+				<p><a class="btn btn-primary btn-lg" href="#/view1" role="button">Learn more &raquo;</a></p>
+			</div>
+			<div class="col-md-4">
+			
+				<form ng-show-auth="logout,error" novalidate role="form" name="loginForm" ng-submit="login()">
+					<div class="form-group">
+						<p ng-show="passMode">Retrieve password</p>
+						<label for="inputEmail">Email address</label>
+						<input ng-focus ng-model="email" type="email" class="form-control" name="email" id="inputEmail" placeholder="Enter email">
+						<div class="error" ng-show="loginForm.email.$dirty && loginForm.email.$invalid && !loginForm.email.$focused && loginForm.submitted">
+							<small class="error" ng-show="loginForm.email.$error.required">Your email is required.</small>
+							<small class="error" ng-show="loginForm.email.$error.email">Please input a valid email.</small>
+						</div>
+					</div>
+					<div class="form-group" ng-hide="passMode">
+						<label for="inputPassword">Password</label>
+						<input ng-focus ng-model="pass" type="password" class="form-control" id="inputPassword" placeholder="Enter password">
+						<div class="error" ng-show="loginForm.pass.$dirty && loginForm.pass.$invalid && !loginForm.pass.$focused && loginForm.submitted">
+							<small class="error" ng-show="loginForm.pass.$error.required">A password is required.</small>
+						</div>						
+					</div>
+					<div ng-cloak ng-show="createMode" class="form-group">
+						<label for="inputRepeatPassword">Repeat password</label>
+						<input ng-model="confirm" type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat password">
+					</div>
+					<button ng-hide="createMode || passMode" type="submit" class="btn btn-primary">Sign in</button>
+					<button ng-hide="createMode || passMode" ng-click="createMode = true" type='button' class="btn btn-default">Register</button>
+					<button ng-cloak ng-show="passMode" ng-click="forgotpass()" type='button' class="btn btn-success">Retrieve password</button>
+					<button ng-cloak ng-show="createMode" ng-click="createAccount()" type='button' class="btn btn-success">Create Account</button>
+					<button ng-cloak ng-show="createMode || passMode" ng-click="createMode = false; passMode = false; clearErr()" type='button' class="btn btn-cancel">Cancel</button>
+					<button ng-cloak ng-show-auth="login" ng-click="logout()" type='button' class="btn btn-warning">Log Out</button>
+					<div ng-show="err" class="alert alert-danger"><small>{{err}}</small></div>
+					<p><a ng-hide="createMode || passMode" ng-click="passMode = true; clearErr()"><small>I forgot my password</small></a></p>
+				</form>
+				
+			</div>
+		</div>		
+      </div>
+    </div>
+	
+    <div class="container">
 
-<p class="status good" ng-show-auth="login">Hello! You are logged in.</p>
-<p class="status" ng-show-auth="logout">Not logged in</p>
-<p class="status error" ng-show-auth="error">{{auth.error}}</p>
+		<!-- Example row of columns -->
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn btn-default" href="#/view1" role="button">View details &raquo;</a></p>
+			</div>
+			<div class="col-md-4">
+				<h2>Heading</h2>
+				<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+				<p><a class="btn btn-default" href="#/view1" role="button">View details &raquo;</a></p>
+			</div>
+			<div class="col-md-4">
+				<h2>Heading</h2>
+				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+				<p><a class="btn btn-default" href="#/view1" role="button">View details &raquo;</a></p>
+			</div>
+		</div>		
 
-<input ng-model="syncedValue" type="text" /> <b>{{syncedValue}}</b>
-
-<p>Open <a ng-href="{{FBURL}}/syncedValue">Forge</a> or a <a target="_blank" href="#/">new window</a> to see this input update in real time:</p>
-
+	</div> <!-- /container -->	

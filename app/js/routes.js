@@ -2,29 +2,34 @@
 
 angular.module('myApp.routes', ['ngRoute'])
 
-   // configure views; the authRequired parameter is used for specifying pages
-   // which should only be available while logged in
-   .config(['$routeProvider', function($routeProvider) {
-      $routeProvider.when('/home', {
-         templateUrl: 'partials/home.html',
-         controller: 'HomeCtrl'
-      });
-
-      $routeProvider.when('/chat', {
-         templateUrl: 'partials/chat.html',
-         controller: 'ChatCtrl'
-      });
-
-      $routeProvider.when('/account', {
-         authRequired: true, // must authenticate before viewing this page
-         templateUrl: 'partials/account.html',
-         controller: 'AccountCtrl'
-      });
-
-      $routeProvider.when('/login', {
-         templateUrl: 'partials/login.html',
-         controller: 'LoginCtrl'
-      });
-
-      $routeProvider.otherwise({redirectTo: '/home'});
-   }]);
+	App.config(['$routeProvider', function($routeProvider) {
+		$routeProvider.
+		when('/', {	
+			templateUrl: 'partials/home.html', 
+			controller: 'LoginCtrl'
+		}).
+		when('/view1', {
+			authRequired: false,		
+			templateUrl: 'partials/partial1.html', 
+			controller: 'MyCtrl1'
+		}).
+		when('/view2', {
+			authRequired: true,		
+			templateUrl: 'partials/partial2.html', 
+			controller: 'MyCtrl2'
+		}).		
+		when('/account', {
+			authRequired: true,
+			templateUrl: 'partials/account.html', 
+			controller: 'AccountCtrl'
+		}).
+		otherwise({
+			redirectTo: '/'
+		});    
+	}]).	
+	run(['$rootScope', '$location', function($rootScope, $location) {
+		var path = function() { return $location.path();};
+		$rootScope.$watch(path, function(newVal, oldVal){
+			$rootScope.activetab = newVal;
+		});
+	}]);

@@ -3,18 +3,21 @@
 // Declare app level module which depends on filters, and services
 angular.module('myApp.config', [])
 
-   // version of this seed app is compatible with angularFire 0.6
-   // see tags for other versions: https://github.com/firebase/angularFire-seed/tags
-   .constant('version', '0.6')
+	// Application name
+	.constant('name', 'AppSeed')
 
-   // where to redirect users if they need to authenticate (see module.routeSecurity)
-   .constant('loginRedirectPath', '/login')
+	// version of this seed app is compatible with angularFire 0.6
+	// see tags for other versions: https://github.com/firebase/angularFire-seed/tags
+	.constant('version', '0.1')
 
-   // your Firebase URL goes here
-   .constant('FBURL', 'https://INSTANCE.firebaseio.com')
+	// where to redirect users if they need to authenticate (see module.routeSecurity)
+	.constant('loginRedirectPath', '/')
 
-   //you can use this one to try out a demo of the seed
-//   .constant('FBURL', 'https://angularfire-seed.firebaseio.com');
+	// your Firebase URL goes here
+	.constant('FBURL', 'https://INSTANCE.firebaseio.com')
+
+	//you can use this one to try out a demo of the seed
+	//.constant('FBURL', 'https://angularfire-seed.firebaseio.com');
 
 
 /*********************
