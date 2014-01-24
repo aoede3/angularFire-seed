@@ -1,5 +1,6 @@
+# Fork 
 
-# Fork of "angular-seed — the seed for AngularFire apps" @ https://github.com/firebase/angularFire-seed
+Fork of "angular-seed — the seed for AngularFire apps" @ https://github.com/firebase/angularFire-seed
 
-Adding bootstrap
-Login using Angular validation
+- Added bootstrap - looking into AngularStrap AngularUI
+- Login with Angular validation
