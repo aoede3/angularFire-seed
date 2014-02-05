@@ -10,7 +10,7 @@ var App = angular.module('myApp', [
 	'myApp.controllers',
 	'waitForAuth', 
 	'routeSecurity', 
-	'firebase'
+	'firebase' //,	'ui.bootstrap'
 	])
 		 
    .run(['loginService', '$rootScope', 'FBURL', function(loginService, $rootScope, FBURL) {

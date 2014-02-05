@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-md-8">
 				<h1><span app-name></span> <span class="text-info"> - blah blah</span></h1>
-				<h2 class="lead">Lead in sentance for application</h2>
+				<h2 class="lead">Lead in sentence for application</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sed lectus mauris.</p>
 				<p><a class="btn btn-primary btn-lg" href="#/view1" role="button">Learn more &raquo;</a></p>
 			</div>
@@ -14,7 +14,7 @@
 					<div class="form-group">
 						<p ng-show="passMode">Retrieve password</p>
 						<label for="inputEmail">Email address</label>
-						<input ng-focus ng-model="email" type="email" class="form-control" name="email" id="inputEmail" placeholder="Enter email">
+						<input ng-focus ng-model="email" type="email" class="form-control" name="email" id="inputEmail" placeholder="Enter email" required>
 						<div class="error" ng-show="loginForm.email.$dirty && loginForm.email.$invalid && !loginForm.email.$focused && loginForm.submitted">
 							<small class="error" ng-show="loginForm.email.$error.required">Your email is required.</small>
 							<small class="error" ng-show="loginForm.email.$error.email">Please input a valid email.</small>
@@ -22,7 +22,7 @@
 					</div>
 					<div class="form-group" ng-hide="passMode">
 						<label for="inputPassword">Password</label>
-						<input ng-focus ng-model="pass" type="password" class="form-control" id="inputPassword" placeholder="Enter password">
+						<input ng-minlength="1" ng-focus ng-model="pass" type="password" class="form-control" id="inputPassword" placeholder="Enter password" required>
 						<div class="error" ng-show="loginForm.pass.$dirty && loginForm.pass.$invalid && !loginForm.pass.$focused && loginForm.submitted">
 							<small class="error" ng-show="loginForm.pass.$error.required">A password is required.</small>
 						</div>						
@@ -31,7 +31,7 @@
 						<label for="inputRepeatPassword">Repeat password</label>
 						<input ng-model="confirm" type="password" class="form-control" id="inputRepeatPassword" placeholder="Repeat password">
 					</div>
-					<button ng-hide="createMode || passMode" type="submit" class="btn btn-primary">Sign in</button>
+					<button ng-hide="createMode || passMode" type="submit" class="btn btn-success">Sign in</button>
 					<button ng-hide="createMode || passMode" ng-click="createMode = true" type='button' class="btn btn-default">Register</button>
 					<button ng-cloak ng-show="passMode" ng-click="forgotpass()" type='button' class="btn btn-success">Retrieve password</button>
 					<button ng-cloak ng-show="createMode" ng-click="createAccount()" type='button' class="btn btn-success">Create Account</button>
